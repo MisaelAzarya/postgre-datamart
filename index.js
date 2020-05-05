@@ -19,15 +19,17 @@ function ins(pgClient, table, data){
 // const pgConString = "postgres://postgres:1234@192.168.0.27:5432/staging_transformation";
 
 // untuk yg localhost docker
-const pgConString = "postgres://postgres:mysecretpassword@172.17.0.2:5432/staging_transformation";
+// const pgConString = "postgres://postgres:mysecretpassword@172.17.0.2:5432/staging_transformation";
+const pgConString = "postgres://"+process.env.USER+":"+process.env.PASSWORD+"@"+process.env.HOST+":"+process.env.PORT+"/"+process.env.DATABASE;
+
 var clientpg = new pg.Client(pgConString);
 
 // untuk yg loclahost biasa
 // const pgConString2 = "postgres://postgres:1234@192.168.0.27:5432/staging_datamart";
 
 // untuk yg localhost docker
-const pgConString2 = "postgres://postgres:mysecretpassword@172.17.0.2:5432/staging_datamart";
-
+// const pgConString2 = "postgres://postgres:mysecretpassword@172.17.0.2:5432/staging_datamart";
+const pgConString2 = "postgres://"+process.env.USER2+":"+process.env.PASSWORD2+"@"+process.env.HOST2+":"+process.env.PORT2+"/"+process.env.DATABASE2;
 
 var clientpg2 = new pg.Client(pgConString2);
 
@@ -38,6 +40,11 @@ clientpg.connect(function(err){
     else{
         console.log("connect");
         clientpg2.connect();
+
+        var dropTable="DROP TABLE IF EXISTS dm_city_top10";
+        clientpg2.query(dropTable);
+        console.log("Drop Table dm_city_top10");
+
         var pgTable = "CREATE TABLE IF NOT EXISTS dm_city_top10 ("+
                 "customer_name VARCHAR(25)," +
                 "city VARCHAR(20)," +
