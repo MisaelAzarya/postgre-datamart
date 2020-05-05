@@ -88,8 +88,10 @@ clientpg.connect(function(err){
                     }
                     // console.log(full_data);
                     ins(clientpg2,table,full_data);
-                    console.log("Data Input Success");
-                    process.exit(0);
+                    console.log(res.rows.length + " Data Input Success");
+                    setTimeout((function() {
+                        return process.exit(0);
+                    }), 1000);
                 }
             }
         });
