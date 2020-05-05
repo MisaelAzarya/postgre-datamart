@@ -89,6 +89,7 @@ clientpg.connect(function(err){
                     // console.log(full_data);
                     ins(clientpg2,table,full_data);
                     console.log("Data Input Success");
+                    process.exit(0);
                 }
             }
         });
